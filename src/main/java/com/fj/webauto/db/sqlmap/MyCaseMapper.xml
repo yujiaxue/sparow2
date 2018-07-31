@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+	<select id="selectCase" resultType="com.fj.webauto.db.po.MyCase" parameterType="int">
+		select * from mycase where id = #{value}
+	</select>
+	<select id="selectCaseByName" resultType="com.fj.webauto.db.po.MyCase" parameterType="String">
+		select * from
+		mycase where owner like '%${value}%';
+	</select>
+	<!-- <insert id="initDB">
+		drop table if exists mycase;CREATE TABLE "mycase" ( `casename` TEXT, `owner` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT, `status` TEXT DEFAULT 'undo' );
+	</insert>
+	<insert id = "initdb2">
+				drop table if exists steps; CREATE TABLE "steps" ( `stepName` TEXT NOT NULL, `caseId` INTEGER, `img` TEXT, `createtime` TEXT DEFAULT CURRENT_TIMESTAMP, `updatetime` TEXT DEFAULT CURRENT_TIMESTAMP, `status` TEXT )
+		
+	</insert> -->
+	<insert id="insertCase" parameterType="com.fj.webauto.db.po.MyCase" useGeneratedKeys="true" keyProperty="id">
+		insert into mycase(casename,owner)
+		values(#{casename},#{owner})
+	</insert>
+	
+	<insert id="insertStep" parameterType="com.fj.webauto.db.po.Steps">
+		insert into steps(caseId,stepName,img,status)
+		values(#{caseId},#{stepName},#{img},#{status})
+
+	</insert>
+	<update id="updateCase" parameterType="com.fj.webauto.db.po.MyCase">
+		update mycase set status=#{status} where id=#{id}
+	</update>
+</mapper>
